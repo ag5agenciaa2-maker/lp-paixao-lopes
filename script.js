@@ -47,18 +47,27 @@
       </article>`).join("");
   }
 
-  // filtro de serviços
+  // filtro de serviços com transição suave
   const tabs = $$(".svc-tab");
   tabs.forEach(tab => tab.addEventListener("click", () => {
-    tabs.forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-    const area = tab.dataset.area;
-    let n = 0;
-    $$(".svc-row").forEach(row => {
-      const show = area === "todos" || row.dataset.area === area;
-      row.style.display = show ? "" : "none";
-      if (show) { row.querySelector(".svc-num").textContent = String(++n).padStart(2, "0"); }
+    tabs.forEach(t => {
+      t.classList.remove("active");
+      t.setAttribute("aria-selected", "false");
     });
+    tab.classList.add("active");
+    tab.setAttribute("aria-selected", "true");
+    const area = tab.dataset.area;
+    const rows = $$(".svc-row");
+    rows.forEach(row => row.classList.add("is-hiding"));
+    setTimeout(() => {
+      let n = 0;
+      rows.forEach(row => {
+        const show = area === "todos" || row.dataset.area === area;
+        row.style.display = show ? "" : "none";
+        row.classList.remove("is-hiding");
+        if (show) { row.querySelector(".svc-num").textContent = String(++n).padStart(2, "0"); }
+      });
+    }, 280);
   }));
 
   /* ---------------------------------------------------------
@@ -161,16 +170,23 @@
   window.addEventListener("scroll", onScroll, { passive: true });
 
   const burger = $("#burger");
-  const mpanel = $("#mpanel");
+  const drawer = $("#drawer");
+  const drawerOverlay = $("#drawerOverlay");
+  const drawerClose = $("#drawerClose");
+
   const toggleMenu = (force) => {
-    const open = force !== undefined ? force : !nav.classList.contains("menu-open");
-    nav.classList.toggle("menu-open", open);
-    mpanel.classList.toggle("open", open);
+    const open = force !== undefined ? force : !drawer.classList.contains("open");
+    drawer.classList.toggle("open", open);
+    drawerOverlay.classList.toggle("open", open);
     burger.setAttribute("aria-expanded", String(open));
     document.body.style.overflow = open ? "hidden" : "";
   };
-  burger.addEventListener("click", () => toggleMenu());
-  $$("#mpanel a").forEach(a => a.addEventListener("click", () => toggleMenu(false)));
+
+  burger.addEventListener("click", () => toggleMenu(true));
+  drawerClose.addEventListener("click", () => toggleMenu(false));
+  drawerOverlay.addEventListener("click", () => toggleMenu(false));
+
+  $$(".drawer__nav a").forEach(a => a.addEventListener("click", () => toggleMenu(false)));
 
   // active nav link by section
   const navLinks = $$(".nav__links a");
@@ -244,6 +260,7 @@
     const setErr = (input, bad) => input.closest(".form__row").classList.toggle("invalid", bad);
     const validators = {
       nome: v => v.trim().length >= 2,
+      email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
       telefone: v => (v.replace(/\D/g, "").length >= 10),
       area: v => v.trim() !== "",
       mensagem: v => v.trim().length >= 5
@@ -270,10 +287,19 @@
       if (!ok) return;
 
       const nome = form.elements.nome.value.trim();
+      const email = form.elements.email.value.trim();
       const telv = form.elements.telefone.value.trim();
       const area = form.elements.area.value;
       const msg = form.elements.mensagem.value.trim();
-      const texto = `Olá! Meu nome é ${nome}.%0A%0A*Área de interesse:* ${area}%0A*Telefone:* ${telv}%0A%0A${encodeURIComponent(msg)}`;
+      
+      const textoCompleto = `Olá, me chamo ${nome}, vim através do site e gostaria de uma informação.
+
+- E-mail: ${email}
+- Telefone: ${telv}
+- Serviço: ${area}
+- Situação: ${msg}`;
+
+      const texto = encodeURIComponent(textoCompleto);
       window.open(`https://wa.me/5521987142286?text=${texto}`, "_blank");
 
       form.style.display = "none";
@@ -284,6 +310,63 @@
     $$("input, select, textarea", form).forEach(el =>
       el.addEventListener("input", () => el.closest(".form__row").classList.remove("invalid")));
   }
+
+  /* ---------------------------------------------------------
+     WHATSAPP PREMIUM - Balão de mensagem
+  --------------------------------------------------------- */
+  function initWaPremium() {
+    const bubble = document.getElementById('wa-message-bubble');
+    const typing = document.getElementById('wa-typing');
+    const realMessage = document.getElementById('wa-real-message');
+    const closeBtn = document.getElementById('wa-close-btn');
+    const mainBtn = document.getElementById('wa-main-btn');
+
+    if (!bubble) return;
+
+    // Verifica se o usuário já fechou o balão nesta sessão
+    const isClosed = sessionStorage.getItem('waBubbleClosed') === '1';
+
+    if (!isClosed) {
+      // Mostrar o balão após 5 segundos
+      setTimeout(() => {
+        bubble.classList.add('show');
+
+        // Simular digitação por 2.5 segundos antes de mostrar a mensagem
+        setTimeout(() => {
+          if (typing) typing.style.display = 'none';
+          if (realMessage) {
+            realMessage.style.display = 'block';
+            realMessage.style.opacity = '0';
+            realMessage.style.transform = 'translateY(6px)';
+            realMessage.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            requestAnimationFrame(() => {
+              realMessage.style.opacity = '1';
+              realMessage.style.transform = 'translateY(0)';
+            });
+          }
+        }, 2500);
+      }, 5000);
+    }
+
+    // Fechar balão
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        bubble.classList.remove('show');
+        sessionStorage.setItem('waBubbleClosed', '1');
+      });
+    }
+
+    // Ao clicar no botão, remove o balão
+    if (mainBtn) {
+      mainBtn.addEventListener('click', () => {
+        bubble.classList.remove('show');
+        sessionStorage.setItem('waBubbleClosed', '1');
+      });
+    }
+  }
+
+  initWaPremium();
 
   /* ---------------------------------------------------------
      ANO no rodapé (dinâmico, mantém 2026+)
