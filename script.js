@@ -32,6 +32,60 @@
   ];
 
   const list = $("#svcList");
+  const moreWrap = $("#svcMoreWrap");
+  const btnMore = $("#btnSvcMore");
+  let mostrarTodos = false;
+
+  function renderServicos(area = "todos") {
+    const rows = $$(".svc-row");
+    let visiveisCount = 0;
+    
+    rows.forEach(row => {
+      const pertenceAArea = area === "todos" || row.dataset.area === area;
+      let show = pertenceAArea;
+      
+      // Se for a aba "todos" e não deve mostrar todos, exibe apenas os 6 primeiros
+      if (area === "todos" && !mostrarTodos) {
+        if (visiveisCount >= 6) {
+          show = false;
+        }
+      }
+      
+      row.style.display = show ? "" : "none";
+      if (show) {
+        visiveisCount++;
+        row.querySelector(".svc-num").textContent = String(visiveisCount).padStart(2, "0");
+      }
+    });
+
+    // Controla a visibilidade e o rótulo do botão "Ver mais / Ver menos"
+    if (area === "todos" && SERVICOS.length > 6) {
+      if (moreWrap) {
+        moreWrap.style.display = "flex";
+        requestAnimationFrame(() => moreWrap.classList.add("in"));
+      }
+      
+      if (btnMore) {
+        if (mostrarTodos) {
+          btnMore.innerHTML = `
+            Ver menos serviços
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; transform: translateY(1px);"><path d="m18 15-6-6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          `;
+        } else {
+          btnMore.innerHTML = `
+            Ver mais serviços
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; transform: translateY(1px);"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          `;
+        }
+      }
+    } else {
+      if (moreWrap) {
+        moreWrap.style.display = "none";
+        moreWrap.classList.remove("in");
+      }
+    }
+  }
+
   if (list) {
     list.innerHTML = SERVICOS.map((s, i) => `
       <article class="svc-row" data-area="${s.area}">
@@ -45,6 +99,64 @@
           <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </article>`).join("");
+      
+    // Inicializa a exibição de serviços
+    renderServicos("todos");
+  }
+
+  // Evento do botão "Ver mais / Ver menos"
+  if (btnMore) {
+    btnMore.addEventListener("click", () => {
+      if (!mostrarTodos) {
+        // Ação: Mostrar todos
+        mostrarTodos = true;
+        
+        // Revela os itens ocultados com transição suave
+        const rows = $$(".svc-row");
+        rows.forEach(row => {
+          if (row.style.display === "none") {
+            row.classList.add("is-hiding");
+            row.style.display = "";
+            setTimeout(() => {
+              row.classList.remove("is-hiding");
+            }, 30);
+          }
+        });
+        
+        renderServicos("todos");
+      } else {
+        // Ação: Ocultar excedentes
+        mostrarTodos = false;
+        
+        const rows = $$(".svc-row");
+        const area = "todos";
+        let visiveisCount = 0;
+        
+        // Aplica classe is-hiding para animação de encolhimento nas linhas excedentes
+        rows.forEach(row => {
+          if (row.dataset.area === area || area === "todos") {
+            if (visiveisCount >= 6) {
+              row.classList.add("is-hiding");
+            }
+            visiveisCount++;
+          }
+        });
+        
+        setTimeout(() => {
+          renderServicos("todos");
+          
+          // Rola de volta para o início da seção de forma suave (considerando a navbar fixa)
+          const servicosEl = $("#servicos");
+          if (servicosEl) {
+            const topOffset = servicosEl.getBoundingClientRect().top + window.scrollY - 100;
+            window.scrollTo({ top: topOffset, behavior: "smooth" });
+          }
+          
+          // Remove a classe de animação após ocultar
+          rows.forEach(row => row.classList.remove("is-hiding"));
+        }, 280);
+      }
+    });
   }
 
   // filtro de serviços com transição suave
@@ -60,64 +172,186 @@
     const rows = $$(".svc-row");
     rows.forEach(row => row.classList.add("is-hiding"));
     setTimeout(() => {
-      let n = 0;
-      rows.forEach(row => {
-        const show = area === "todos" || row.dataset.area === area;
-        row.style.display = show ? "" : "none";
-        row.classList.remove("is-hiding");
-        if (show) { row.querySelector(".svc-num").textContent = String(++n).padStart(2, "0"); }
-      });
+      if (area === "todos") {
+        mostrarTodos = false;
+      }
+      renderServicos(area);
+      $$(".svc-row").forEach(row => row.classList.remove("is-hiding"));
     }, 280);
   }));
 
   /* ---------------------------------------------------------
-     DADOS — Depoimentos (reais · Google)
+     DEPOIMENTOS — Carrossel
   --------------------------------------------------------- */
-  const DEPO = [
-    { nome: "Rafael Lopes", quando: "Local Guide · há 7 meses", txt: "Atendimento humanizado e sincero, que dialoga de maneira simples, nos permitindo compreender a difícil tarefa de entender em qual regime você pode se aposentar diante de tantas reformas em menos de 30 anos. Muito obrigado." },
-    { nome: "Marcela Paixão", quando: "há 7 meses", txt: "Atua com profissionalismo e de forma humanizada; nas consultorias possui o cuidado de esclarecer cada ponto de forma que nós, clientes, entendemos. Extremamente competente e dedicada. Eu indico!" },
-    { nome: "Daniela Gomes", quando: "há 7 meses", txt: "Profissional competente, dedicada e extremamente comprometida. Demonstra conhecimento jurídico e uma postura ética admirável. Atenciosa e busca sempre a melhor solução para seus clientes." },
-    { nome: "Cassiane Souza", quando: "há 7 meses", txt: "Graças à ajuda da Dra. Márcia ocorreu tudo certo. Só tenho a agradecer. Bem atenciosa, me ajudou em cada detalhe. Muito grata." },
-    { nome: "Adriana Regina", quando: "há 7 meses", txt: "Uma pessoa maravilhosa, competente, muito profissional e justa. Tenho eterna gratidão por ela." },
-    { nome: "Gabriel Duarte", quando: "há 4 meses", txt: "Uma profissional maravilhosa, super competente em tudo que faz, atenciosa e dedicada. Indico seus serviços de olhos fechados. Obrigado." }
-  ];
-
-  const stage = $("#depoStage");
-  const dotsWrap = $("#depoDots");
-  let cur = 0, timer = null;
-
-  if (stage) {
-    stage.innerHTML = DEPO.map((d, i) => `
-      <figure class="depo__slide${i === 0 ? " active" : ""}" data-i="${i}">
-        <div class="mark" aria-hidden="true">“</div>
-        <blockquote>${d.txt}</blockquote>
-        <figcaption class="depo__who">
-          <span class="avatar">${d.nome.charAt(0)}</span>
-          <b>${d.nome}</b>
-          <span class="stars">★★★★★</span>
-          <small>${d.quando} · no Google</small>
-        </figcaption>
-      </figure>`).join("");
-
-    dotsWrap.innerHTML = DEPO.map((_, i) => `<button data-i="${i}" class="${i === 0 ? "active" : ""}" aria-label="Avaliação ${i + 1}"></button>`).join("");
-
-    const slides = $$(".depo__slide", stage);
-    const dots = $$("button", dotsWrap);
-
-    function go(n) {
-      cur = (n + DEPO.length) % DEPO.length;
-      slides.forEach((s, i) => s.classList.toggle("active", i === cur));
-      dots.forEach((d, i) => d.classList.toggle("active", i === cur));
+  const depoTrack = $("#depoTrack");
+  const depoPrev = $("#depoPrev");
+  const depoNext = $("#depoNext");
+  const depoDots = $("#depoDots");
+  
+  if (depoTrack && depoPrev && depoNext) {
+    const slides = $$(".depo__slide", depoTrack);
+    let currentIndex = 0;
+    let slidesPerView = 3;
+    
+    function getSlidesPerView() {
+      if (window.innerWidth <= 960) return 1;
+      if (window.innerWidth <= 1100) return 2;
+      return 3;
     }
-    function auto() {
-      if (reduce) return;
-      clearInterval(timer);
-      timer = setInterval(() => go(cur + 1), 6000);
+    
+    function updateSlidesPerView() {
+      slidesPerView = getSlidesPerView();
+      const maxIndex = Math.max(0, slides.length - slidesPerView);
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+      updateCarousel();
     }
-    $("#depoNext").addEventListener("click", () => { go(cur + 1); auto(); });
-    $("#depoPrev").addEventListener("click", () => { go(cur - 1); auto(); });
-    dots.forEach(d => d.addEventListener("click", () => { go(+d.dataset.i); auto(); }));
-    auto();
+    
+    function createDots() {
+      if (!depoDots) return;
+      const totalDots = Math.max(1, slides.length - slidesPerView + 1);
+      depoDots.innerHTML = "";
+      for (let i = 0; i < totalDots; i++) {
+        const dot = document.createElement("button");
+        dot.className = "depo__dot" + (i === currentIndex ? " active" : "");
+        dot.setAttribute("aria-label", "Ir para slide " + (i + 1));
+        dot.addEventListener("click", () => {
+          currentIndex = i;
+          updateCarousel();
+        });
+        depoDots.appendChild(dot);
+      }
+    }
+    
+    function updateCarousel() {
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      const gap = 32;
+      const offset = currentIndex * (slideWidth + gap);
+      depoTrack.style.transform = "translateX(-" + offset + "px)";
+      
+      // Atualizar dots
+      if (depoDots) {
+        $$(".depo__dot", depoDots).forEach((dot, i) => {
+          dot.classList.toggle("active", i === currentIndex);
+        });
+      }
+      
+      // Atualizar estado dos botões
+      const maxIndex = Math.max(0, slides.length - slidesPerView);
+      depoPrev.disabled = currentIndex === 0;
+      depoNext.disabled = currentIndex >= maxIndex;
+    }
+    
+    depoPrev.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    });
+    
+    depoNext.addEventListener("click", () => {
+      const maxIndex = Math.max(0, slides.length - slidesPerView);
+      if (currentIndex < maxIndex) {
+        currentIndex++;
+        updateCarousel();
+      }
+    });
+    
+    // Touch/swipe support
+    let startX = 0;
+    let isDragging = false;
+    let currentTranslate = 0;
+    
+    depoTrack.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+      const style = window.getComputedStyle(depoTrack);
+      const matrix = new WebKitCSSMatrix(style.transform);
+      currentTranslate = matrix.m41;
+    }, { passive: true });
+    
+    depoTrack.addEventListener("touchmove", (e) => {
+      if (!isDragging) return;
+      const diff = e.touches[0].clientX - startX;
+      depoTrack.style.transform = "translateX(" + (currentTranslate + diff) + "px)";
+    }, { passive: true });
+    
+    depoTrack.addEventListener("touchend", (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const diff = e.changedTouches[0].clientX - startX;
+      const threshold = 50;
+      
+      if (diff > threshold && currentIndex > 0) {
+        currentIndex--;
+      } else if (diff < -threshold) {
+        const maxIndex = Math.max(0, slides.length - slidesPerView);
+        if (currentIndex < maxIndex) currentIndex++;
+      }
+      updateCarousel();
+    }, { passive: true });
+    
+    // Resize handler
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        updateSlidesPerView();
+        createDots();
+      }, 150);
+    });
+    
+    // Init
+    updateSlidesPerView();
+    createDots();
+  }
+
+  /* ---------------------------------------------------------
+     DEPOIMENTOS — Controle de Expansão (Mobile)
+  --------------------------------------------------------- */
+  const expandBtn = $("#depoExpandBtn");
+  if (expandBtn) {
+    expandBtn.addEventListener("click", () => {
+      const carousel = $(".depo__carousel");
+      if (carousel) {
+        const isOpen = carousel.classList.toggle("expanded");
+        expandBtn.classList.toggle("active", isOpen);
+        
+        const textSpan = $("span", expandBtn);
+        if (textSpan) {
+          textSpan.textContent = isOpen ? "Visualizar menos avaliações" : "Visualizar mais avaliações";
+        }
+        
+        // Mostrar/ocultar navegação quando expandido
+        const navs = $$(".depo__nav");
+        const dots = $(".depo__dots");
+        navs.forEach(nav => nav.style.display = isOpen ? "none" : "");
+        if (dots) dots.style.display = isOpen ? "none" : "";
+        
+        // Resetar posição do carrossel
+        if (depoTrack) {
+          depoTrack.style.transform = isOpen ? "translateX(0)" : "";
+          if (!isOpen && typeof updateCarousel === 'function') {
+            currentIndex = 0;
+            updateCarousel();
+          }
+        }
+        
+        // Ajustar slides para mostrar todos quando expandido
+        const slides = $$(".depo__slide");
+        slides.forEach(slide => {
+          slide.style.flex = isOpen ? "0 0 100%" : "";
+          slide.style.minWidth = isOpen ? "0" : "";
+        });
+        
+        // Scroll suave para a seção
+        if (isOpen) {
+          const depoSection = $("#depoimentos");
+          if (depoSection) {
+            depoSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+      }
+    });
   }
 
   /* ---------------------------------------------------------
@@ -162,12 +396,37 @@
   }
 
   /* ---------------------------------------------------------
-     NAVBAR — scroll + burger + active link
+     NAVBAR — scroll + burger + active link + premium effects
   --------------------------------------------------------- */
   const nav = $("#nav");
-  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 60);
+  const navWrapper = $("#navWrapper");
+  let lastScrollY = 0;
+  let ticking = false;
+
+  const onScroll = () => {
+    const scrollY = window.scrollY;
+    const isScrolled = scrollY > 60;
+    
+    // Toggle scrolled class
+    nav.classList.toggle("scrolled", isScrolled);
+    if (navWrapper) navWrapper.classList.toggle("scrolled", isScrolled);
+    
+    lastScrollY = scrollY;
+    ticking = false;
+  };
+  
   onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Smooth transition for hide/show
+  if (navWrapper) {
+    navWrapper.style.transition = "padding .6s cubic-bezier(0.16, 1, 0.3, 1)";
+  }
 
   const burger = $("#burger");
   const drawer = $("#drawer");
@@ -178,8 +437,11 @@
     const open = force !== undefined ? force : !drawer.classList.contains("open");
     drawer.classList.toggle("open", open);
     drawerOverlay.classList.toggle("open", open);
+    nav.classList.toggle("menu-open", open);
     burger.setAttribute("aria-expanded", String(open));
     document.body.style.overflow = open ? "hidden" : "";
+    // Ensure nav is visible when menu is open
+    if (open) nav.style.transform = "translateY(0)";
   };
 
   burger.addEventListener("click", () => toggleMenu(true));
