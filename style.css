@@ -679,15 +679,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   90%, 100% { opacity: 0; transform: translateX(-50%) translateY(5px); }
 }
 
-/* ============================================================
-   MARQUEE
-   ============================================================ */
-.marquee { background: var(--bordo-escuro); color: var(--marfim); overflow: hidden; padding: 20px 0; border-block: 1px solid rgba(201,162,39,.25); }
-.marquee__track { display: flex; gap: 0; width: max-content; animation: marquee 32s linear infinite; }
-.marquee:hover .marquee__track { animation-play-state: paused; }
-.marquee__track span { font-family: var(--serif); font-style: italic; font-size: clamp(1.2rem, 2.4vw, 1.9rem); padding: 0 30px; display: inline-flex; align-items: center; gap: 60px; }
-.marquee__track span::after { content: "✦"; color: var(--ouro); font-style: normal; font-size: .7em; }
-@keyframes marquee { to { transform: translateX(-50%); } }
+
 
 /* ============================================================
    IMPACTO
