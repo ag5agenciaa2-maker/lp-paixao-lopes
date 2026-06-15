@@ -210,10 +210,14 @@
       if (!depoDots) return;
       const totalDots = Math.max(1, slides.length - slidesPerView + 1);
       depoDots.innerHTML = "";
+      depoDots.setAttribute("role", "tablist");
+      depoDots.setAttribute("aria-label", "Navegação de depoimentos");
       for (let i = 0; i < totalDots; i++) {
         const dot = document.createElement("button");
         dot.className = "depo__dot" + (i === currentIndex ? " active" : "");
-        dot.setAttribute("aria-label", "Ir para slide " + (i + 1));
+        dot.setAttribute("role", "tab");
+        dot.setAttribute("aria-selected", i === currentIndex ? "true" : "false");
+        dot.setAttribute("aria-label", "Ir para depoimento " + (i + 1));
         dot.addEventListener("click", () => {
           currentIndex = i;
           updateCarousel();
@@ -232,6 +236,7 @@
       if (depoDots) {
         $$(".depo__dot", depoDots).forEach((dot, i) => {
           dot.classList.toggle("active", i === currentIndex);
+          dot.setAttribute("aria-selected", i === currentIndex ? "true" : "false");
         });
       }
       
@@ -422,7 +427,7 @@
             faqModalBody.innerHTML = getAnswerHTML(item);
             faqModal.classList.add("open");
             faqModal.setAttribute("aria-hidden", "false");
-            document.body.style.overflow = "hidden"; // trava o scroll de fundo
+            document.body.classList.add("no-scroll"); // trava o scroll de fundo
           }
         } else {
           // Lógica Desktop: Atualizar painel de resposta fixo
@@ -453,7 +458,7 @@
       if (faqModal) {
         faqModal.classList.remove("open");
         faqModal.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = ""; // libera o scroll
+        document.body.classList.remove("no-scroll"); // libera o scroll
       }
     };
 
@@ -463,6 +468,7 @@
 
   /* ---------------------------------------------------------
      NAVBAR — scroll + burger + active link + premium effects
+     (Otimizado: rAF batching evita forced reflow)
   --------------------------------------------------------- */
   const nav = $("#nav");
   const navWrapper = $("#navWrapper");
@@ -505,7 +511,7 @@
     drawerOverlay.classList.toggle("open", open);
     nav.classList.toggle("menu-open", open);
     burger.setAttribute("aria-expanded", String(open));
-    document.body.style.overflow = open ? "hidden" : "";
+    document.body.classList.toggle("no-scroll", open);
     // Ensure nav is visible when menu is open
     if (open) nav.style.transform = "translateY(0)";
   };
@@ -575,10 +581,14 @@
   }
 
   /* ---------------------------------------------------------
-     HERO — entrada
+     HERO — entrada (LCP otimizado: classe loaded imediata)
   --------------------------------------------------------- */
   const hero = $("#inicio");
-  if (hero) requestAnimationFrame(() => hero.classList.add("loaded"));
+  if (hero) {
+    requestAnimationFrame(() => hero.classList.add("loaded"));
+    // Garante LCP visível mesmo se JS falhar
+    document.documentElement.classList.add("hero-ready");
+  }
 
   /* ---------------------------------------------------------
      FORMULÁRIO — validação real + deeplink WhatsApp

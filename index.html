@@ -441,13 +441,25 @@
 }
 </script>
 <link rel="icon" type="image/x-icon" href="assets/favicon-paixao-lopes-advogados.ico" />
+<link rel="preload" href="assets/logo-paixao-lopes-advogados-mobile.webp" as="image" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-  <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-<link rel="stylesheet" href="cookie-banner.css" />
+<link rel="dns-prefetch" href="//fonts.googleapis.com" />
+<link rel="dns-prefetch" href="//fonts.gstatic.com" />
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" href="style.css" as="style">
 <link rel="stylesheet" href="style.css" />
+<link rel="preload" href="cookie-banner.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="cookie-banner.css"></noscript>
+<style>
+  /* LCP font fallback: garante texto visível imediatamente */
+  .hero__kicker, .hero h1, .hero__sub, .hero__actions { font-family: Georgia, 'Times New Roman', serif; }
+  .hero__kicker { opacity: 1; transform: translateY(0); }
+  .hero h1 .line > span { transform: translateY(0); }
+  .hero__sub { opacity: 1; transform: none; }
+  .hero__actions { opacity: 1; transform: none; }
+</style>
 </head>
 <body id="topo">
 
@@ -455,7 +467,7 @@
 <div class="nav-wrapper" id="navWrapper">
   <header class="nav" id="nav">
     <a class="nav__brand" href="#topo" aria-label="Paixão Lopes — início">
-      <img src="assets/logo-paixao-lopes-advogados-desktop.webp" alt="Logotipo oficial redondo da Paixão Lopes Advogados Associados com a balança da justiça e as iniciais PL" />
+      <img src="assets/logo-paixao-lopes-advogados-desktop.webp" alt="Logotipo oficial redondo da Paixão Lopes Advogados Associados com a balança da justiça e as iniciais PL" width="80" height="80" />
       <span class="nav__brand-txt">
         <b>Paixão Lopes</b>
         <span>Advogados Associados</span>
@@ -512,7 +524,7 @@
     </h1>
     <p class="hero__sub">Direito previdenciário, trabalhista e cível explicado em linguagem simples — para que você decida com segurança. Atendimento humanizado, conduzido diretamente pelas sócias-fundadoras.</p>
     <div class="hero__actions">
-      <a class="btn btn-primary" href="https://wa.me/5521987142286?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20uma%20informa%C3%A7%C3%A3o." target="_blank" rel="noopener">
+      <a class="btn btn-primary" href="https://wa.me/5521987142286?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20uma%20informa%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">
         Agendar consulta
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -605,7 +617,7 @@
 
     <div class="servicos__foot reveal">
       <p>Não encontrou seu caso? Converse diretamente conosco.</p>
-      <a class="btn btn-primary" href="https://wa.me/5521987142286?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20uma%20informa%C3%A7%C3%A3o." target="_blank" rel="noopener">
+      <a class="btn btn-primary" href="https://wa.me/5521987142286?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20uma%20informa%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">
         Agendar consulta
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -871,7 +883,7 @@
 
     <!-- Link Discreto para Avaliar -->
     <div class="depo__footer-link reveal d2">
-      <a class="depo__write-button-clean" href="https://search.google.com/local/writereview?placeid=ChIJrTag38zhmwARZI1tCoVVPSE" target="_blank" rel="noopener">
+      <a class="depo__write-button-clean" href="https://search.google.com/local/writereview?placeid=ChIJrTag38zhmwARZI1tCoVVPSE" target="_blank" rel="noopener noreferrer">
         <span>Quer compartilhar sua experiência? Escreva no Google</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-left: 6px;"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -921,7 +933,7 @@
             <div class="local__info-group">
               <h3 class="local__info-title">Endereço e Sede</h3>
               <div class="local__info-desc">
-                <a href="https://www.google.com/maps/dir//Paix%C3%A3o+Lopes+Advogados+Associados+-+R.+Campo+Grande,+1014+-+sala+526+-+Campo+Grande,+Rio+de+Janeiro+-+RJ,+23080-000/@-22.9015764,-43.5594576,18z" target="_blank" rel="noopener">
+                <a href="https://www.google.com/maps/dir//Paix%C3%A3o+Lopes+Advogados+Associados+-+R.+Campo+Grande,+1014+-+sala+526+-+Campo+Grande,+Rio+de+Janeiro+-+RJ,+23080-000/@-22.9015764,-43.5594576,18z" target="_blank" rel="noopener noreferrer">
                   R. Campo Grande, 1014 — sala 526, Campo Grande<br>Rio de Janeiro — RJ, CEP 23080‑000
                 </a>
               </div>
@@ -945,11 +957,11 @@
           </div>
 
           <div class="local__actions reveal d3">
-            <a class="btn btn-outline" href="https://www.google.com/maps/dir//Paix%C3%A3o+Lopes+Advogados+Associados+-+R.+Campo+Grande,+1014+-+sala+526+-+Campo+Grande,+Rio+de+Janeiro+-+RJ,+23080-000/@-22.9015764,-43.5594576,18z" target="_blank" rel="noopener">
+            <a class="btn btn-outline" href="https://www.google.com/maps/dir//Paix%C3%A3o+Lopes+Advogados+Associados+-+R.+Campo+Grande,+1014+-+sala+526+-+Campo+Grande,+Rio+de+Janeiro+-+RJ,+23080-000/@-22.9015764,-43.5594576,18z" target="_blank" rel="noopener noreferrer">
               Como chegar
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <a class="btn btn-primary" href="https://wa.me/5521987142286?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20uma%20informa%C3%A7%C3%A3o." target="_blank" rel="noopener">
+            <a class="btn btn-primary" href="https://wa.me/5521987142286?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20uma%20informa%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">
               WhatsApp
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
@@ -1042,8 +1054,8 @@
     <div class="foot__top">
       <!-- Coluna 1 — Marca -->
       <div class="foot__about">
-        <a class="foot__brand" href="https://share.google/LCn8cSXzbrbcLTiIs" target="_blank" rel="noopener">
-          <img src="assets/logo-paixao-lopes-advogados-desktop.webp" alt="Logotipo oficial redondo da Paixão Lopes Advogados Associados" />
+        <a class="foot__brand" href="https://share.google/LCn8cSXzbrbcLTiIs" target="_blank" rel="noopener noreferrer">
+          <img src="assets/logo-paixao-lopes-advogados-desktop.webp" alt="Logotipo oficial redondo da Paixão Lopes Advogados Associados" width="80" height="80" />
         </a>
         <p>Advocacia boutique previdenciária, trabalhista e cível no Rio de Janeiro. Atendimento humanizado e transparente.</p>
       </div>
@@ -1052,12 +1064,12 @@
       <div class="foot__col">
         <h4>Navegação</h4>
         <ul>
-          <li><a href="#inicio">Início</a></li>
-          <li><a href="#servicos">Áreas de atuação</a></li>
-          <li><a href="#sobre">Sobre o escritório</a></li>
-          <li><a href="#depoimentos">Depoimentos</a></li>
-          <li><a href="#faq">Dúvidas frequentes</a></li>
-          <li><a href="#contato">Fale conosco</a></li>
+          <li><a href="#inicio" aria-label="Início — topo da página">Início</a></li>
+          <li><a href="#servicos" aria-label="Áreas de atuação — serviços jurídicos">Áreas de atuação</a></li>
+          <li><a href="#sobre" aria-label="Sobre o escritório — história e equipe">Sobre o escritório</a></li>
+          <li><a href="#depoimentos" aria-label="Depoimentos — avaliações de clientes">Depoimentos</a></li>
+          <li><a href="#faq" aria-label="Dúvidas frequentes — FAQ">Dúvidas frequentes</a></li>
+          <li><a href="#contato" aria-label="Fale conosco — formulário de contato">Fale conosco</a></li>
         </ul>
       </div>
 
@@ -1065,11 +1077,11 @@
       <div class="foot__col">
         <h4>Serviços</h4>
         <ul>
-          <li><a href="#servicos">Aposentadoria</a></li>
-          <li><a href="#servicos">BPC LOAS Idoso</a></li>
-          <li><a href="#servicos">Salário Maternidade</a></li>
-          <li><a href="#servicos">Rescisão Indireta</a></li>
-          <li><a href="#servicos">Defesa de Reclamada</a></li>
+          <li><a href="#servicos" aria-label="Serviço — Aposentadoria">Aposentadoria</a></li>
+          <li><a href="#servicos" aria-label="Serviço — BPC LOAS Idoso">BPC LOAS Idoso</a></li>
+          <li><a href="#servicos" aria-label="Serviço — Salário Maternidade">Salário Maternidade</a></li>
+          <li><a href="#servicos" aria-label="Serviço — Rescisão Indireta">Rescisão Indireta</a></li>
+          <li><a href="#servicos" aria-label="Serviço — Defesa de Reclamada">Defesa de Reclamada</a></li>
         </ul>
       </div>
 
@@ -1158,7 +1170,7 @@
 <div class="drawer" id="drawer">
   <div class="drawer__header">
     <div class="drawer__brand">
-      <img src="assets/logo-paixao-lopes-advogados-mobile.webp" alt="Brasão oficial redondo da Paixão Lopes Advogados" />
+      <img src="assets/logo-paixao-lopes-advogados-mobile.webp" alt="Brasão oficial redondo da Paixão Lopes Advogados" width="38" height="38" />
       <span><b>Paixão Lopes</b></span>
     </div>
     <button class="drawer__close" id="drawerClose" aria-label="Fechar menu">
@@ -1363,7 +1375,7 @@
     </div>
     
     <!-- Botão Flutuante Redondo -->
-    <a href="https://wa.me/5521987142286?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20uma%20informa%C3%A7%C3%A3o." class="wa-float-btn" target="_blank" rel="noopener noreferrer" id="wa-main-btn" role="button" aria-label="Falar pelo WhatsApp">
+    <a href="https://wa.me/5521987142286?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20uma%20informa%C3%A7%C3%A3o." class="wa-float-btn" target="_blank" rel="noopener noreferrer" id="wa-main-btn" role="button" aria-label="Falar pelo WhatsApp — Dra. Márcia Lopes">
         <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.13 1.588 5.929L0 24l6.335-1.652a11.78 11.78 0 005.715 1.47h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/>
         </svg>
