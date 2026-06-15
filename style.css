@@ -421,6 +421,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
 }
 .hero__seal img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
   filter: drop-shadow(0 30px 60px rgba(61,10,20,.3));
   animation: sealPulse 4s ease-in-out infinite;
 }
