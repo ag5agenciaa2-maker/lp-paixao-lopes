@@ -366,33 +366,99 @@
   ];
 
   const faqList = $("#faqList");
-  if (faqList) {
-    faqList.innerHTML = FAQ.map(f => `
-      <div class="faq__item">
-        <button class="faq__q" aria-expanded="false">
-          <h3>${f.q}</h3>
-          <span class="faq__icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq__a"><div class="faq__a-inner">${f.a}</div></div>
-      </div>`).join("");
+  const faqAnswerPanel = $("#faqAnswerPanel");
+  const faqModal = $("#faqModal");
+  const faqModalBody = $("#faqModalBody");
+  const faqModalClose = $("#faqModalClose");
+  const faqModalOverlay = $("#faqModalOverlay");
 
-    $$(".faq__item", faqList).forEach(item => {
-      const btn = $(".faq__q", item);
-      const panel = $(".faq__a", item);
+  function getWaLink(pergunta) {
+    const baseText = `Olá, li a dúvida "${pergunta}" no site e gostaria de saber mais.`;
+    return `https://wa.me/5521987142286?text=${encodeURIComponent(baseText)}`;
+  }
+
+  function getAnswerHTML(item) {
+    return `
+      <div class="faq__answer-content">
+        <div class="faq__answer-badge" aria-hidden="true">✦</div>
+        <h3 class="faq__answer-q">${item.q}</h3>
+        <p class="faq__answer-a">${item.a}</p>
+        <div class="faq__answer-divider"></div>
+        <div class="faq__answer-footer">
+          <span>Ainda tem dúvidas sobre esse assunto?</span>
+          <a href="${getWaLink(item.q)}" target="_blank" rel="noopener" class="btn btn-outline">
+            Falar com as advogadas
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  if (faqList) {
+    faqList.innerHTML = FAQ.map((f, i) => `
+      <button class="faq__item-btn${i === 0 ? " active" : ""}" data-index="${i}">
+        <span class="faq__item-num">${String(i + 1).padStart(2, "0")}</span>
+        <span class="faq__item-q">${f.q}</span>
+        <svg class="faq__item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>`).join("");
+
+    // Inicializa a primeira resposta no desktop
+    if (faqAnswerPanel && FAQ.length > 0) {
+      faqAnswerPanel.innerHTML = getAnswerHTML(FAQ[0]);
+    }
+
+    const faqButtons = $$(".faq__item-btn", faqList);
+
+    faqButtons.forEach(btn => {
       btn.addEventListener("click", () => {
-        const open = item.classList.contains("open");
-        $$(".faq__item", faqList).forEach(o => {
-          o.classList.remove("open");
-          $(".faq__q", o).setAttribute("aria-expanded", "false");
-          $(".faq__a", o).style.maxHeight = null;
-        });
-        if (!open) {
-          item.classList.add("open");
-          btn.setAttribute("aria-expanded", "true");
-          panel.style.maxHeight = panel.scrollHeight + "px";
+        const index = parseInt(btn.dataset.index, 10);
+        const item = FAQ[index];
+        const isMobile = window.innerWidth < 1024;
+
+        if (isMobile) {
+          // Lógica Mobile: Abrir modal Bottom Sheet
+          if (faqModal && faqModalBody) {
+            faqModalBody.innerHTML = getAnswerHTML(item);
+            faqModal.classList.add("open");
+            faqModal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden"; // trava o scroll de fundo
+          }
+        } else {
+          // Lógica Desktop: Atualizar painel de resposta fixo
+          faqButtons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          if (faqAnswerPanel) {
+            const currentContent = $(".faq__answer-content", faqAnswerPanel);
+            if (currentContent) {
+              currentContent.classList.add("fade-out");
+              setTimeout(() => {
+                faqAnswerPanel.innerHTML = getAnswerHTML(item);
+                const newContent = $(".faq__answer-content", faqAnswerPanel);
+                if (newContent) {
+                  newContent.classList.add("fade-in");
+                }
+              }, 200);
+            } else {
+              faqAnswerPanel.innerHTML = getAnswerHTML(item);
+            }
+          }
         }
       });
     });
+
+    // Fechar modal no mobile
+    const closeModal = () => {
+      if (faqModal) {
+        faqModal.classList.remove("open");
+        faqModal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = ""; // libera o scroll
+      }
+    };
+
+    if (faqModalClose) faqModalClose.addEventListener("click", closeModal);
+    if (faqModalOverlay) faqModalOverlay.addEventListener("click", closeModal);
   }
 
   /* ---------------------------------------------------------

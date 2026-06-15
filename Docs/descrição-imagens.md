@@ -10,9 +10,9 @@
 | Arquivo Atual (Local) | Novo Nome SEO (Recomendado) | Uso Atual no Site | Uso Recomendado / Alternativo |
 | :--- | :--- | :--- | :--- |
 | `AP1548~1.webp` | `paixao-lopes-advogadas-socias-escritorio.webp` | Seção Sobre (`assets/socias-dupla.webp` quebrado) | **Principal:** Sobre / **Alternativo:** OG Image compartilhamento |
-| `APOSEN~2.webp` | `advogada-marcia-lopes-assinando-documentos.webp` | Seção Confiança (`assets/socia-trabalho.webp` quebrado) | **Principal:** Confiança (Trabalho ativo) / **Alternativo:** Seção de Contato |
+| `APOSEN~2.webp` | `advogada-marcela-paixao-assinando-documentos.webp` | Seção Confiança (`assets/socia-trabalho.webp` quebrado) | **Principal:** Confiança (Trabalho ativo) / **Alternativo:** Seção de Contato |
 | `APOSEN~1.webp` | `marcia-lopes-advogada-oab-campo-grande.webp` | N/A (Não utilizada no HTML) | **Principal:** Seção Sobre (Credenciais) / **Alternativo:** Galeria |
-| `APOSEN~3.webp` | `advogada-marcia-lopes-atendimento-escritorio.webp` | N/A (Não utilizada no HTML) | **Principal:** Seção Sobre (Perfil) / **Alternativo:** Fale Conosco |
+| `APOSEN~3.webp` | `advogada-marcela-paixao-atendimento-escritorio.webp` | N/A (Não utilizada no HTML) | **Principal:** Seção Sobre (Perfil) / **Alternativo:** Fale Conosco |
 | `APOSEN~4.webp` | `marcela-paixao-advogada-fachada-escritorio.webp` | N/A (Não utilizada no HTML) | **Principal:** Seção Localização / **Alternativo:** Perfil Sobre |
 | `logo-desktop-paixao+e+lopes.webp` | `logo-paixao-lopes-advogados-desktop.webp` | N/A (`assets/logo-pl.webp` genérico) | **Principal:** Logotipo da Barra de Navegação (Desktop) e Rodapé |
 | `logo-mobile-paixao+e+lopes.webp` | `logo-paixao-lopes-advogados-mobile.webp` | Hero Selo (`assets/logo-pl.webp` genérico) | **Principal:** Selo flutuante do Hero e Navegação em Telas Mobile |
@@ -37,14 +37,14 @@
 
 ### 2. `APOSEN~2.webp`
 
-*   **Descrição:** Dra. Márcia Lopes sentada em uma cadeira de escritório giratória preta, inclinada sobre uma mesa escura de madeira, escrevendo com uma caneta esferográfica azul em folhas de papel oficiais do escritório. Ela veste um blazer rosa-blush aberto por cima de uma blusa creme. Seu cabelo é cacheado escuro e curto. Na mesa à sua frente está posicionado um notebook branco com a tampa traseira voltada para a câmera (marca MSU), um smartphone preto deitado e um mousepad redondo com mouse azul. O fundo do escritório é composto por uma parede cinza texturizada de cimento queimado com tomadas pretas na parede. A iluminação vem de cima, focada na mesa de trabalho.
+*   **Descrição:** Dra. Marcela Paixão sentada em uma cadeira de escritório giratória preta, inclinada sobre uma mesa escura de madeira, escrevendo com uma caneta esferográfica azul em folhas de papel oficiais do escritório. Ela veste um blazer rosa-blush aberto por cima de uma blusa creme. Seu cabelo é cacheado escuro e curto. Na mesa à sua frente está posicionado um notebook branco com a tampa traseira voltada para a câmera (marca MSU), um smartphone preto deitado e um mousepad redondo com mouse azul. O fundo do escritório é composto por uma parede cinza texturizada de cimento queimado com tomadas pretas na parede. A iluminação vem de cima, focada na mesa de trabalho.
 *   **Contexto de uso atual:** Seção Por que confiar em nós (`#confianca`), corrigindo a chamada que antes buscava `assets/socia-trabalho.webp`.
 *   **Sugestões de uso no site:**
     *   🥇 **Uso principal recomendado:** Bloco de imagens da seção "Por que confiar em nós". Mostra o trabalho prático, seriedade e dedicação na análise processual.
     *   🥈 **Uso alternativo 1:** Foto ilustrativa da seção de Contato / Formulário.
     *   ⚠️ **Evitar usar em:** Favicon ou logotipo devido ao formato retangular detalhado.
-*   **Novo nome sugerido (SEO):** `advogada-marcia-lopes-assinando-documentos.webp`
-*   **Alt text sugerido:** "Dra. Márcia Lopes sentada em sua mesa de atendimento, analisando e assinando papéis do escritório Paixão Lopes Advogados."
+*   **Novo nome sugerido (SEO):** `advogada-marcela-paixao-assinando-documentos.webp`
+*   **Alt text sugerido:** "Dra. Marcela Paixão sentada em sua mesa de atendimento, analisando e assinando papéis do escritório Paixão Lopes Advogados."
 
 ---
 
@@ -63,14 +63,14 @@
 
 ### 4. `APOSEN~3.webp`
 
-*   **Descrição:** Dra. Márcia Lopes sentada no escritório, sorrindo alegremente com braços cruzados sobre a mesa de atendimento. Ela está usando óculos de grau, blazer rosa-blush e aparelho ortodôntico visível no sorriso. À sua frente está a parte traseira do notebook branco (MSU), papéis impressos do escritório e uma caneta esferográfica azul. O fundo da parede é cinza com textura rústica de cimento queimado. Enquadramento médio-fechado vertical.
+*   **Descrição:** Dra. Marcela Paixão sentada no escritório, sorrindo alegremente com braços cruzados sobre a mesa de atendimento. Ela está usando óculos de grau, blazer rosa-blush e aparelho ortodôntico visível no sorriso. À sua frente está a parte traseira do notebook branco (MSU), papéis impressos do escritório e uma caneta esferográfica azul. O fundo da parede é cinza com textura rústica de cimento queimado. Enquadramento médio-fechado vertical.
 *   **Contexto de uso atual:** Não identificada no HTML (imagem de reserva).
 *   **Sugestões de uso no site:**
-    *   🥇 **Uso principal recomendado:** Perfil profissional individual da Dra. Márcia na seção Sobre ou Fale Conosco. Transmite grande acolhimento, simpatia e proximidade.
+    *   🥇 **Uso principal recomendado:** Perfil profissional individual da Dra. Marcela na seção Sobre ou Fale Conosco. Transmite grande acolhimento, simpatia e proximidade.
     *   🥈 **Uso alternativo 1:** Imagem de mini-avatar nos depoimentos/respostas.
     *   ⚠️ **Evitar usar em:** Banners wide horizontais.
-*   **Novo nome sugerido (SEO):** `advogada-marcia-lopes-atendimento-escritorio.webp`
-*   **Alt text sugerido:** "Dra. Márcia Lopes sorrindo de braços cruzados atrás de sua mesa com notebook no escritório Paixão Lopes Advogados em Campo Grande."
+*   **Novo nome sugerido (SEO):** `advogada-marcela-paixao-atendimento-escritorio.webp`
+*   **Alt text sugerido:** "Dra. Marcela Paixão sorrindo de braços cruzados atrás de sua mesa com notebook no escritório Paixão Lopes Advogados em Campo Grande."
 
 ---
 
@@ -131,8 +131,8 @@ Execute estes comandos no terminal PowerShell na raiz da pasta do projeto para r
 # Criar pasta temporária ou renomear arquivos diretamente via git mv
 git mv Assets/AP1548~1.webp Assets/paixao-lopes-advogadas-socias-escritorio.webp
 git mv Assets/APOSEN~1.webp Assets/marcia-lopes-advogada-oab-campo-grande.webp
-git mv Assets/APOSEN~2.webp Assets/advogada-marcia-lopes-assinando-documentos.webp
-git mv Assets/APOSEN~3.webp Assets/advogada-marcia-lopes-atendimento-escritorio.webp
+git mv Assets/APOSEN~2.webp Assets/advogada-marcela-paixao-assinando-documentos.webp
+git mv Assets/APOSEN~3.webp Assets/advogada-marcela-paixao-atendimento-escritorio.webp
 git mv Assets/APOSEN~4.webp Assets/marcela-paixao-advogada-fachada-escritorio.webp
 git mv Assets/logo-desktop-paixao+e+lopes.webp Assets/logo-paixao-lopes-advogados-desktop.webp
 git mv Assets/logo-mobile-paixao+e+lopes.webp Assets/logo-paixao-lopes-advogados-mobile.webp
