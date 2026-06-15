@@ -1160,8 +1160,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
 }
 .ph-portrait-block img {
   width: 100%;
-  aspect-ratio: 4/5;
-  object-fit: cover;
+  height: auto;  /* Proporcional ao tamanho original da imagem (600x800) */
+  aspect-ratio: auto;
+  object-fit: initial;
   border: 1px solid rgba(42, 42, 42, 0.05);
   display: block;
 }
@@ -1232,9 +1233,12 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
 }
 .sobre__img-wrapper img {
   width: 100%;
-  aspect-ratio: 4/5;
+  height: auto;
+  max-height: 480px; /* Limita a altura sem distorcer */
   object-fit: cover;
+  object-position: center 35%; /* Desce a imagem dentro do card */
   border: 1px solid rgba(255, 255, 255, 0.05);
+  display: block;
 }
 
 /* Selo com os nomes das sócias */
