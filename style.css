@@ -1459,10 +1459,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
 }
 .depo__quote-text {
   font-family: var(--serif);
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.7;
   color: var(--grafite);
-  font-style: italic;
   margin-bottom: 20px;
   text-wrap: pretty;
 }

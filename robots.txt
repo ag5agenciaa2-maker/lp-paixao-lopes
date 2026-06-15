@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Allow AI crawlers (GEO optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://www.paixaolopesadvogados.com.br/sitemap.xml
