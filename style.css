@@ -1559,7 +1559,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   box-sizing: content-box;
 }
 .depo__dot:hover {
-  background: rgba(201, 162, 39, 0.5);
+  background-color: rgba(201, 162, 39, 0.5);
 }
 .depo__dot.active {
   background-color: var(--ouro);
