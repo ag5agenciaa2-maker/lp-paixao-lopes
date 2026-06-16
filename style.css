@@ -2012,8 +2012,19 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
     border-left-color: transparent;
     padding-left: 8px;
   }
+  .faq__item-btn:hover .faq__item-num,
+  .faq__item-btn.active .faq__item-num {
+    color: var(--ouro);
+  }
+  .faq__item-btn:hover .faq__item-q,
   .faq__item-btn.active .faq__item-q {
-    color: var(--bordo);
+    color: var(--bordo-escuro);
+  }
+  .faq__item-btn:hover .faq__item-arrow,
+  .faq__item-btn.active .faq__item-arrow {
+    opacity: 0.4;
+    color: var(--ouro);
+    transform: translateX(0) scale(0.9);
   }
   .faq__item-btn::after {
     display: none;
