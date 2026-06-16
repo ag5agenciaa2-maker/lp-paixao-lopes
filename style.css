@@ -1562,7 +1562,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   background: rgba(201, 162, 39, 0.5);
 }
 .depo__dot.active {
-  background: var(--ouro);
+  background-color: var(--ouro);
   transform: scale(1.2);
 }
 
@@ -1636,6 +1636,12 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   }
   .depo__dots {
     margin-top: 24px;
+    gap: 8px;
+  }
+  .depo__dot {
+    width: 6px;
+    height: 6px;
+    padding: 10px;
   }
 }
 
