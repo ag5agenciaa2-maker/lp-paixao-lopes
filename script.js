@@ -226,9 +226,14 @@
       }
     }
     
+    function getGap() {
+      if (window.innerWidth <= 960) return 24;
+      return 32;
+    }
+    
     function updateCarousel() {
       const slideWidth = slides[0].getBoundingClientRect().width;
-      const gap = 32;
+      const gap = getGap();
       const offset = currentIndex * (slideWidth + gap);
       depoTrack.style.transform = "translateX(-" + offset + "px)";
       

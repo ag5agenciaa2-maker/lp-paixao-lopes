@@ -1518,6 +1518,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   transition: all 0.4s var(--ease);
   flex-shrink: 0;
   z-index: 2;
+  padding: 0;
 }
 .depo__nav:hover {
   background: var(--ouro);
@@ -1553,7 +1554,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   background: rgba(201, 162, 39, 0.25);
   cursor: pointer;
   transition: all 0.4s var(--ease);
-  padding: 18px 10px;
+  padding: 12px;
   background-clip: content-box;
   box-sizing: content-box;
 }
@@ -1620,8 +1621,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
     flex: 0 0 100%;
   }
   .depo__nav {
-    width: 40px;
-    height: 40px;
+    display: none;
   }
   .depo__nav svg {
     width: 18px;
@@ -1632,6 +1632,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   }
   .depo__card-clean {
     padding: 32px 0;
+    height: auto;
   }
   .depo__dots {
     margin-top: 24px;
