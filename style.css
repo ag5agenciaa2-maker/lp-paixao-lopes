@@ -2592,30 +2592,15 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #fff;
   border: 2px solid #25d366;
-}
-.wa-status-dot {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  width: 12px;
-  height: 12px;
-  background: #25d366;
-  border: 2px solid #fff;
-  border-radius: 50%;
 }
 .wa-name {
   display: block;
   font-weight: 700;
   color: #1a1a1a;
   font-size: 15px;
-}
-.wa-status-text {
-  font-size: 11px;
-  color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 /* Animação de Digitação */

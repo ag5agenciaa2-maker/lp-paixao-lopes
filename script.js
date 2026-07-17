@@ -13,8 +13,8 @@
   const SERVICOS = [
     { area: "prev", areaLabel: "Previdenciário", title: "Aposentadoria", desc: "Análise do melhor regime e a entrada certa após tantas reformas." },
     { area: "prev", areaLabel: "Previdenciário", title: "BPC LOAS — Idoso", desc: "Benefício assistencial para idosos em situação de vulnerabilidade." },
-    { area: "prev", areaLabel: "Previdenciário", title: "BPC LOAS — Deficiente", desc: "Garantia do benefício para pessoas com deficiência." },
-    { area: "prev", areaLabel: "Previdenciário", title: "Salário Maternidade", desc: "Para empregadas, autônomas e seguradas especiais." },
+    { area: "prev", areaLabel: "Previdenciário", title: "BPC LOAS — Deficiente", desc: "Maior segurança na análise do seu direito." },
+    { area: "prev", areaLabel: "Previdenciário", title: "Salário Maternidade", desc: "Se você deseja saber se tem direito, conte com orientação jurídica especializada." },
     { area: "prev", areaLabel: "Previdenciário", title: "Pensão por Morte", desc: "Reconhecimento e regularização do direito dos dependentes." },
     { area: "prev", areaLabel: "Previdenciário", title: "Auxílio-Reclusão", desc: "Amparo aos dependentes do segurado de baixa renda." },
     { area: "prev", areaLabel: "Previdenciário", title: "Auxílio-Acidente", desc: "Indenização por sequela que reduza a capacidade de trabalho." },
@@ -369,8 +369,8 @@
   --------------------------------------------------------- */
   const FAQ = [
     { q: "Vocês atendem online?", a: "Sim. Além do atendimento presencial em Campo Grande, conduzimos consultas e processos de forma totalmente online, por WhatsApp e videochamada, para clientes em todo o Rio de Janeiro." },
-    { q: "Como funciona a primeira consulta?", a: "É uma conversa para entendermos a sua situação. Você nos conta o caso, tiramos suas dúvidas em linguagem simples e explicamos os caminhos possíveis — com transparência sobre prazos e expectativas, sem compromisso." },
-    { q: "Quais documentos preciso para dar entrada na aposentadoria?", a: "Em geral: documento de identidade, CPF, comprovante de residência, carteira de trabalho e o extrato do CNIS (Cadastro Nacional de Informações Sociais). Na consulta indicamos exatamente o que o seu caso exige — cada história é única." },
+    { q: "Como funciona a primeira consulta?", a: "É uma conversa para entendermos a sua situação. Você nos conta o caso, tiramos suas dúvidas em linguagem simples e explicamos os caminhos possíveis, com transparência sobre prazos e expectativas, sem compromisso." },
+    { q: "Quais documentos preciso para dar entrada na aposentadoria?", a: "Em geral: documento de identidade, CPF, comprovante de residência, carteira de trabalho e o extrato do CNIS (Cadastro Nacional de Informações Sociais). Na consulta indicamos exatamente o que o seu caso exige, porque cada história é única." },
     { q: "Vocês atendem empregadores?", a: "Sim. Atuamos na defesa de empresas em reclamatórias trabalhistas, emitimos pareceres técnicos e oferecemos consultoria preventiva para reduzir passivos e dar segurança às decisões do empregador." },
     { q: "Qual é a área de atendimento?", a: "Atendemos clientes em todo o estado do Rio de Janeiro. Nosso escritório fica na R. Campo Grande, 1014 — sala 526, em Campo Grande." }
   ];
@@ -666,37 +666,36 @@
 
     if (!bubble) return;
 
-    // Verifica se o usuário já fechou o balão nesta sessão
-    const isClosed = sessionStorage.getItem('waBubbleClosed') === '1';
+    // O balão reaparece a cada carregamento da página; fechá-lo vale só até o próximo refresh
+    let isClosed = false;
 
-    if (!isClosed) {
-      // Mostrar o balão após 5 segundos
+    // Mostrar o balão após 5 segundos
+    setTimeout(() => {
+      if (isClosed) return;
+      bubble.classList.add('show');
+
+      // Simular digitação por 2.5 segundos antes de mostrar a mensagem
       setTimeout(() => {
-        bubble.classList.add('show');
-
-        // Simular digitação por 2.5 segundos antes de mostrar a mensagem
-        setTimeout(() => {
-          if (typing) typing.style.display = 'none';
-          if (realMessage) {
-            realMessage.style.display = 'block';
-            realMessage.style.opacity = '0';
-            realMessage.style.transform = 'translateY(6px)';
-            realMessage.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            requestAnimationFrame(() => {
-              realMessage.style.opacity = '1';
-              realMessage.style.transform = 'translateY(0)';
-            });
-          }
-        }, 2500);
-      }, 5000);
-    }
+        if (typing) typing.style.display = 'none';
+        if (realMessage) {
+          realMessage.style.display = 'block';
+          realMessage.style.opacity = '0';
+          realMessage.style.transform = 'translateY(6px)';
+          realMessage.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          requestAnimationFrame(() => {
+            realMessage.style.opacity = '1';
+            realMessage.style.transform = 'translateY(0)';
+          });
+        }
+      }, 2500);
+    }, 5000);
 
     // Fechar balão
     if (closeBtn) {
       closeBtn.addEventListener('click', (e) => {
         e.preventDefault();
         bubble.classList.remove('show');
-        sessionStorage.setItem('waBubbleClosed', '1');
+        isClosed = true;
       });
     }
 
@@ -704,7 +703,7 @@
     if (mainBtn) {
       mainBtn.addEventListener('click', () => {
         bubble.classList.remove('show');
-        sessionStorage.setItem('waBubbleClosed', '1');
+        isClosed = true;
       });
     }
   }
