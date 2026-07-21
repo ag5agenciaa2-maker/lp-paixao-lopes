@@ -655,60 +655,92 @@
   }
 
   /* ---------------------------------------------------------
-     WHATSAPP PREMIUM - Balão de mensagem
+     WHATSAPP PREMIUM - Balão de mensagem (AG5 V4)
+
+     Timeline:
+       • t=0s  → usuário chega na 3ª seção (#servicos) → botão verde aparece imediatamente
+       • t=25s → balão sobe ("digitando..." por 2.5s → mensagem real)
+       • t=40s → balão some automaticamente (visível por 15s)
+
+     MODO_COMPLIANCE = true (advocacia): sem badge de notificação, sem status "online".
   --------------------------------------------------------- */
-  function initWaPremium() {
-    const bubble = document.getElementById('wa-message-bubble');
-    const typing = document.getElementById('wa-typing');
-    const realMessage = document.getElementById('wa-real-message');
-    const closeBtn = document.getElementById('wa-close-btn');
-    const mainBtn = document.getElementById('wa-main-btn');
+  (function initWaPremium() {
+    const MODO_COMPLIANCE = true;
 
-    if (!bubble) return;
+    const bubble        = document.getElementById('wa-message-bubble');
+    const typing        = document.getElementById('wa-typing');
+    const realMessage   = document.getElementById('wa-real-message');
+    const badge         = document.getElementById('wa-notification');
+    const closeBtn      = document.getElementById('wa-close-btn');
+    const mainBtn       = document.getElementById('wa-main-btn');
+    const targetSection = document.getElementById('servicos');
 
-    // O balão reaparece a cada carregamento da página; fechá-lo vale só até o próximo refresh
-    let isClosed = false;
+    if (!bubble || !typing || !realMessage || !closeBtn || !mainBtn || !targetSection) return;
 
-    // Mostrar o balão após 5 segundos
-    setTimeout(() => {
-      if (isClosed) return;
-      bubble.classList.add('show');
+    const DELAY_BALAO            = 25000;
+    const DURATION_TYPING        = 2500;
+    const DURATION_BALAO_VISIVEL = 15000;
+    const DELAY_BADGE_APOS_SUMIR = 5000;
 
-      // Simular digitação por 2.5 segundos antes de mostrar a mensagem
-      setTimeout(() => {
-        if (typing) typing.style.display = 'none';
-        if (realMessage) {
-          realMessage.style.display = 'block';
-          realMessage.style.opacity = '0';
-          realMessage.style.transform = 'translateY(6px)';
-          realMessage.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-          requestAnimationFrame(() => {
-            realMessage.style.opacity = '1';
-            realMessage.style.transform = 'translateY(0)';
-          });
+    let triggered = false;
+    let autoHideTimer = null;
+    let badgeTimer = null;
+    let userClosed = false;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !triggered) {
+          triggered = true;
+
+          mainBtn.classList.add('visible');
+
+          setTimeout(() => {
+            if (userClosed) return;
+            bubble.classList.add('show');
+
+            setTimeout(() => {
+              if (userClosed) return;
+              typing.classList.add('is-hidden');
+              realMessage.classList.add('is-visible');
+              requestAnimationFrame(() => realMessage.classList.add('is-in'));
+            }, DURATION_TYPING);
+
+            autoHideTimer = setTimeout(() => {
+              if (userClosed) return;
+              bubble.classList.remove('show');
+
+              if (!MODO_COMPLIANCE && badge) {
+                badgeTimer = setTimeout(() => {
+                  if (userClosed) return;
+                  badge.classList.add('show');
+                }, DELAY_BADGE_APOS_SUMIR);
+              }
+            }, DURATION_BALAO_VISIVEL);
+          }, DELAY_BALAO);
         }
-      }, 2500);
-    }, 5000);
-
-    // Fechar balão
-    if (closeBtn) {
-      closeBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        bubble.classList.remove('show');
-        isClosed = true;
       });
-    }
+    }, { threshold: 0.1 });
 
-    // Ao clicar no botão, remove o balão
-    if (mainBtn) {
-      mainBtn.addEventListener('click', () => {
-        bubble.classList.remove('show');
-        isClosed = true;
-      });
-    }
-  }
+    observer.observe(targetSection);
 
-  initWaPremium();
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      userClosed = true;
+      bubble.classList.remove('show');
+      if (autoHideTimer) clearTimeout(autoHideTimer);
+      if (badgeTimer) clearTimeout(badgeTimer);
+      if (!MODO_COMPLIANCE && badge) {
+        setTimeout(() => { badge.classList.add('show'); }, DELAY_BADGE_APOS_SUMIR);
+      }
+    });
+
+    mainBtn.addEventListener('click', () => {
+      bubble.classList.remove('show');
+      if (badge) badge.classList.remove('show');
+      if (autoHideTimer) clearTimeout(autoHideTimer);
+      if (badgeTimer) clearTimeout(badgeTimer);
+    });
+  })();
 
   /* ---------------------------------------------------------
      ANO no rodapé (dinâmico, mantém 2026+)

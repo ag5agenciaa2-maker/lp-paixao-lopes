@@ -2544,13 +2544,13 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
 }
 
 /* ========================================
-   WHATSAPP PREMIUM EXPERIENCE
+   WHATSAPP PREMIUM EXPERIENCE (AG5 V4)
    ======================================== */
 .wa-premium-container {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 1000;
+  z-index: 2000;
   font-family: var(--sans);
 }
 
@@ -2563,7 +2563,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(201, 162, 39, .25);
   border-radius: 24px 24px 4px 24px;
   box-shadow: 0 20px 40px rgba(61, 10, 20, 0.15);
   padding: 20px;
@@ -2578,6 +2578,22 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   transform: translateY(0) scale(1);
 }
 
+/* Cauda triangular conectando o balão ao botão */
+.wa-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  right: 22px;
+  width: 20px;
+  height: 20px;
+  background: inherit;
+  border-right: 1px solid rgba(201, 162, 39, .35);
+  border-bottom: 1px solid rgba(201, 162, 39, .35);
+  transform: rotate(45deg);
+  border-bottom-right-radius: 4px;
+  z-index: -1;
+}
+
 /* Cabeçalho */
 .wa-header {
   display: flex;
@@ -2587,7 +2603,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   border-bottom: 1px solid rgba(0,0,0,0.06);
   padding-bottom: 12px;
 }
-.wa-avatar-wrapper { position: relative; }
+.wa-avatar-wrapper { position: relative; flex-shrink: 0; }
 .wa-avatar {
   width: 45px;
   height: 45px;
@@ -2595,6 +2611,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   object-fit: contain;
   background: #fff;
   border: 2px solid #25d366;
+  display: block;
 }
 .wa-name {
   display: block;
@@ -2631,7 +2648,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   color: #333;
   line-height: 1.5;
 }
-.wa-message-text strong { color: #000; font-weight: 700; }
+.wa-message-text strong { color: var(--ouro); font-weight: 700; }
 
 /* Botão Flutuante - Redondo */
 .wa-float-btn {
@@ -2648,6 +2665,14 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   text-decoration: none;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.8);
+}
+.wa-float-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
 }
 .wa-float-btn:hover {
   transform: scale(1.08);
@@ -2658,6 +2683,29 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   height: 30px;
   flex: none;
 }
+
+/* Badge de notificação (compacto — não invasivo) */
+.wa-badge {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  background: #ff3b30;
+  color: #fff;
+  font-size: 9px;
+  line-height: 1;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  border: 1.5px solid #fff;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.4s ease;
+}
+.wa-badge.show { opacity: 1; transform: scale(1); }
 
 /* Fechar */
 .wa-close {
@@ -2676,6 +2724,11 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; let
   transition: color 0.3s;
 }
 .wa-close:hover { color: #333; }
+
+/* Classes utilitárias (PageSpeed fix — evita inline style / forced reflow) */
+.wa-typing.is-hidden { display: none !important; }
+.wa-message-text.is-visible { display: block !important; opacity: 0; transition: opacity 500ms ease; }
+.wa-message-text.is-visible.is-in { opacity: 1; }
 
 /* Responsivo */
 @media (max-width: 480px) {
