@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /docs/
+Disallow: /Docs/
 
 # Allow AI crawlers (GEO optimization)
 User-agent: GPTBot

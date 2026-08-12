@@ -675,7 +675,13 @@
     const mainBtn       = document.getElementById('wa-main-btn');
     const targetSection = document.getElementById('servicos');
 
-    if (!bubble || !typing || !realMessage || !closeBtn || !mainBtn || !targetSection) return;
+    if (!bubble || !typing || !realMessage || !closeBtn || !mainBtn) return;
+
+    // Páginas sem a seção #servicos (Nossa História, Termos, Política) não têm o
+    // gatilho de scroll da home — o botão flutuante fica visível desde o início.
+    if (!targetSection) {
+      mainBtn.classList.add('visible');
+    }
 
     const DELAY_BALAO            = 25000;
     const DURATION_TYPING        = 2500;
@@ -721,7 +727,7 @@
       });
     }, { threshold: 0.1 });
 
-    observer.observe(targetSection);
+    if (targetSection) observer.observe(targetSection);
 
     closeBtn.addEventListener('click', (e) => {
       e.preventDefault();
